@@ -1,0 +1,27 @@
+1- Siparisleri, siparis veren musterilerin bilgileri ile almak icin bir SQL sorgusu yazin.
+SELECT *
+FROM Orders AS O
+JOIN Customers AS C
+ON O.CustomerID=C.CustomerID
+ORDER by OrderID ASC
+
+2- Sipariş edilen ürünlerin isimlerini ve ilgili kategorilerini almak icin bir SQL sorgusu yazin.
+SELECT Products.ProductName, Categories.CategoryName
+FROM OrderDetails
+JOIN Products ON OrderDetails.ProductID=Products.ProductID
+JOIN Categories ON Categories.CategoryID=Products.CategoryID
+
+3- Müşterilerin müşteri bilgilerini ve varsa sipariş detaylarını almak icin bir SQL sorgusu yazin.
+ SELECT Customers.CustomerName, Customers.Address,Customers.City,Customers.Country,Products.ProductName
+ FROM Customers
+ LEFT JOIN Orders on Customers.CustomerID=Orders.CustomerID
+ LEFT JOIN OrderDetails on Orders.OrderID=OrderDetails.OrderID
+ LEFT JOIN Products on Products.ProductID=OrderDetails.ProductID
+
+4- Ürünlerin isimlerini, fiyatlarını ve varsa ilgili kategori adlarını almak icin bir SQL sorgusu yazin.
+SELECT Products.ProductName, Products.Price, Categories.CategoryName
+FROM Products
+LEFT JOIN Categories on Categories.CategoryID=Products.CategoryID
+
+5- Aynı soyadını paylaşan müşterileri ve bu musterilere ait sipariş detaylarını almak için bir SQL sorgusu yazın.
+?

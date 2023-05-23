@@ -1,0 +1,43 @@
+ODEV 1: Sql Joins
+Repo'da bulunan onlinemarket.db database dosyasini bilgisayariniza indirin. 
+DB Browser for Sqlite programinda Open Database secenegi veritabanini acin 
+ve asagidaki sorulara cevaplar verecek SQL querylerini (sorgularini) yazin. 
+Bir cevaplar.txt dosyasi olusturup her soru icin kullandiginiz SQL sorgunuzu 
+ekleyin ve ardindan bu text dosyasini repoya yukleyin.
+
+1-Siparisleri, siparis veren musterilerin bilgileri ile almak icin bir SQL sorgusu yazin.
+SELECT *
+FROM Orders as O
+LEFT JOIN Customers as C
+ON O.CustomerID = C.CustomerID
+
+2-Sipariş edilen ürünlerin isimlerini ve ilgili kategorilerini almak icin bir SQL sorgusu yazin.
+SELECT P.ProductName, C.CategoryName
+
+FROM (SELECT P.ProductName, P.CategoryID
+FROM Products as P
+LEFT JOIN Orders as O
+ON P.ProductID = O.ProductID) as P
+
+LEFT JOIN Categories as C
+ON P.CategoryID = C.CategoryID
+3-Müşterilerin müşteri bilgilerini ve varsa sipariş detaylarını almak icin bir SQL sorgusu yazin.
+SELECT *
+FROM Customers as C
+LEFT JOIN Orders as O
+ON C.CustomerID = O.CustomerID
+4-Ürünlerin isimlerini, fiyatlarını ve varsa ilgili kategori adlarını almak icin bir SQL sorgusu yazin.
+SELECT P.ProductName, P.Price, C.CategoryName
+FROM Products as P
+LEFT JOIN Categories as C
+ON P.CategoryID = C.CategoryID
+5-Aynı soyadını paylaşan müşterileri ve bu musterilere ait sipariş detaylarını almak için bir SQL sorgusu yazın.
+SELECT Customers.LastName, Customers.FirstName, Orders.OrderID, Orders.ProductID, Orders.OrderDate
+FROM Customers
+INNER JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+WHERE Customers.LastName IN (
+    SELECT LastName
+    FROM Customers
+    GROUP BY LastName
+    HAVING COUNT(*) > 1
+)

@@ -135,11 +135,7 @@ query =f"""SELECT
 
 # sorguyu database de calistiriyoruz
 result = pd.read_sql_query(query, conn)
-      
-if len(result) > 0:   
-    print(result)    
-else:
-     print(" Language is not official lang.")
+print(result)    #kitalar ve konusulan dil sayisi tablosu
 conn.close()
 
 

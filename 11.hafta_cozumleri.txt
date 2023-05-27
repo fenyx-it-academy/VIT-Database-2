@@ -1,0 +1,116 @@
+#################################### 1. Bolum Sorular ve Cevaplari ############################################
+
+
+------------------------- ---------- 1. Soru ve Cevabi ---------------------------------------------------------
+
+Soru: Siparisleri, siparis veren musterilerin bilgileri ile almak icin bir SQL sorgusu yazin.
+Cevap:
+
+SELECT Orders.OrderID, Customers.FirstName, Customers.LastName
+FROM Orders
+JOIN Customers ON Orders.CustomerID = Customers.CustomerID;
+
+------------------------------------- 2. Soru ve Cevabi ---------------------------------------------------------
+
+Soru: Sipariş edilen ürünlerin isimlerini ve ilgili kategorilerini almak icin bir SQL sorgusu yazin.
+Cevap: 
+
+SELECT
+    Products.ProductName,
+    Categories.CategoryName
+FROM
+    Orders
+JOIN
+    Products ON Orders.ProductID = Products.ProductID
+JOIN
+    Categories ON Products.CategoryID = Categories.CategoryID;
+
+------------------------------------- 3. Soru ve Cevabi ---------------------------------------------------------
+
+Soru: Müşterilerin müşteri bilgilerini ve varsa sipariş detaylarını almak icin bir SQL sorgusu yazin.
+Cevap: 
+
+SELECT *
+FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+LEFT JOIN Products ON Products.ProductID = Orders.ProductID;
+
+-------------------------------------- 4. Soru ve Cevabi ---------------------------------------------------------
+
+Soru: Ürünlerin isimlerini, fiyatlarını ve varsa ilgili kategori adlarını almak icin bir SQL sorgusu yazin.
+Cevap:
+
+SELECT *
+FROM Products
+LEFT JOIN Categories ON Products.CategoryID = Categories.CategoryID;
+
+-------------------------------------- 5. Soru ve Cevabi ---------------------------------------------------------
+
+Soru: Aynı soyadını paylaşan müşterileri ve bu musterilere ait sipariş detaylarını alan bir SQL sorgusu yazın.
+Cevap: 
+
+SELECT Customers.FirstName, Customers.LastName, Orders.OrderID
+FROM Customers
+JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+WHERE LastName IN (
+	SELECT LastName
+	FROM Customers
+	GROUP BY LastName
+	HAVING COUNT (*) > 1 )
+ORDER BY Customers.LastName;
+
+alternatif sorgulama
+SELECT Products.ProductName, Customers.FirstName, Customers.LastName
+FROM Orders
+JOIN Customers ON Orders.CustomerID = Customers.CustomerID
+JOIN Products ON Products.ProductID = Orders.OrderID
+
+----------------------- 1. Bolum sorulari ve cevaplari bitti -------------------------------------------------
+
+##################################################################################################################
+
+######################################## 2. Bolum Sorular ve Cevaplari ###########################################
+
+
+ --------------------------------------- 1. Soru ve Cevabi -------------------------------------------------------
+
+Soru: "city" ve "country" tablolarını düşünün. Nüfusu 1 milyondan fazla olan her şehrin adını, ilgili ülke adını ve nüfusunu almak için bir SQL sorgusu yazın.
+Cevap: 
+
+SELECT country.Name, city.Name, city.Population
+FROM country
+JOIN city ON country.Code = city.CountryCode
+WHERE city.Population > 1000000;
+
+----------------------------------------- 2. Soru ve Cevabi ------------------------------------------------------
+
+Soru: "city," "country" ve "countrylanguage" tablolarını kullanarak her ülkenin toplam nüfusunu ve resmi dil olarak İngilizce konuşan nüfusun yüzdesini almak için bir SQL sorgusu yazın. Sonuçları nüfusa göre azalan şekilde sıralayın.
+
+Cevap: 
+
+------------------------------------------ 3. Soru ve Cevabi -----------------------------------------------------
+
+Soru: "city" ve "country" tablolarını düşünün. Her şehrin adını, ilgili ülke adını, kıtasını ve yönetim şeklini almak için bir SQL sorgusu yazın. Yalnızca "Anayasal Monarşi" (Constitutional Monarchy) yönetim şekline sahip olan şehirleri dahil edin.
+Cevap:
+
+SELECT country.Capital, country.Name, country.Continent, country.GovernmentForm
+FROM country
+JOIN city ON city.ID = country.Capital;
+
+
+-------------------------------------------4. Soru ve Cevabi -----------------------------------------------------
+
+Soru: "city," "country" ve "countrylanguage" tablolarını kullanarak her şehrin adını, ilgili ülke adını ve resmi dil dışında konuşan nüfusun yüzdesini almak için bir SQL sorgusu yazın. Yalnızca yüzdesi %10'dan büyük olan şehirleri dahil edin.
+
+
+Cevap: 
+
+-------------------------------------------5. Soru ve Cevabi -----------------------------------------------------
+
+Soru: "city" ve "country" tablolarını düşünün. Her şehrin adını, ilgili ülke adını, bölgesini ve devlet başkanını almak için bir SQL sorgusu yazın. Yalnızca nüfusu 100 milyondan fazla olan bölgelerde bulunan şehirleri dahil edin.
+Cevap:
+
+SELECT city.Name, country.Name, country.Continent, country.HeadOfState
+FROM country
+JOIN city ON city.CountryCode = country.Code
+WHERE city.Population > 100000000;

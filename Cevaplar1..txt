@@ -1,0 +1,46 @@
+1-Siparisleri, siparis veren musterilerin bilgileri ile almak icin bir SQL sorgusu yazin.
+
+SELECT * 
+FROM Orders AS O 
+JOIN Customers AS C 
+ON O.CustomerID=C.CustomerID
+
+2-Sipariş edilen ürünlerin isimlerini ve ilgili kategorilerini almak icin bir SQL sorgusu yazin.
+
+SELECT p.ProductName,c.CategoryName
+FROM Orders AS O
+JOIN Products AS P
+ON O.ProductID=P.ProductID
+join Categories as c
+on p.CategoryID=c.CategoryID
+
+3-Müşterilerin müşteri bilgilerini ve varsa sipariş detaylarını almak icin bir SQL sorgusu yazin.
+
+SELECT *
+FROM Customers AS c
+LEFT JOIN Orders AS o
+ON c.CustomerID=o.CustomerID
+
+4-Ürünlerin isimlerini, fiyatlarını ve varsa ilgili kategori adlarını almak icin bir SQL sorgusu yazin.
+
+SELECT ProductName,Price,c.CategoryName
+FROM Products AS p
+LEFT JOIN Categories AS c
+ON p.CategoryID=c.CategoryID
+
+5-Aynı soyadını paylaşan müşterileri ve bu musterilere ait sipariş detaylarını almak için bir SQL sorgusu yazın.
+
+SELECT Customers.LastName, Customers.FirstName, Orders.OrderID, Orders.ProductID, Orders.OrderDate
+FROM Customers
+INNER JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+WHERE Customers.LastName IN (
+    SELECT LastName
+    FROM Customers
+    GROUP BY LastName
+    HAVING COUNT(*) > 1
+);
+
+
+
+
+---------------------------

@@ -1,0 +1,76 @@
+1- Siparisleri, siparis veren musterilerin bilgileri ile almak icin bir SQL sorgusu yazin.
+
+SELECT Orders.OrderID, Orders.ProductID, Products.ProductName, Customers.FirstName, customers.LastName
+FROM Orders
+JOIN Customers
+On Orders.CustomerID = Customers.CustomerID
+JOIN Products
+on Orders.ProductID = Products.ProductID 
+
+
+
+2-Sipariş edilen ürünlerin isimlerini ve ilgili kategorilerini almak icin bir SQL sorgusu yazin.
+
+SELECT 
+Orders.ProductID, 
+Products.ProductID ,
+Products.ProductName,
+Categories.CategoryName
+FROM Orders
+JOIN Products
+ON Products.ProductID = Orders.ProductID
+JOIN Categories
+On Products.CategoryID = Categories.CategoryID
+
+
+
+
+
+3- Müşterilerin müşteri bilgilerini ve varsa sipariş detaylarını almak icin bir SQL sorgusu yazin.
+
+SELECT 
+Customers.FirstName , Customers.LastName,
+Orders.OrderID, 
+Products.ProductID,
+Products.ProductName
+FROM Customers
+JOIN Orders
+on Customers.CustomerID = Orders.CustomerID
+JOIN Products
+on Orders.ProductID= Products.ProductID
+
+
+
+
+
+
+4-Ürünlerin isimlerini, fiyatlarını ve varsa ilgili kategori adlarını almak icin bir SQL sorgusu yazin.
+
+SELECT 
+Products.ProductName,
+Products.Price,
+Categories.CategoryName
+FROM Products
+JOIN Categories
+on Products.CategoryID = Categories.CategoryID
+
+
+5-Aynı soyadını paylaşan müşterileri ve bu musterilere ait sipariş detaylarını almak için bir SQL sorgusu yazın.
+
+SELECT 
+Customers.LastName,
+Customers.FirstName,
+Orders.OrderID,
+Products.ProductName
+FROM Customers
+
+JOIN Orders
+on Orders.CustomerID = Customers.CustomerID
+JOIN Products
+on Products.ProductID = Orders.ProductID  
+
+WHERE LastName in 
+(SELECT LastName FROM Customers GROUP by LastName 
+HAVING count(LastName) > 1)
+
+

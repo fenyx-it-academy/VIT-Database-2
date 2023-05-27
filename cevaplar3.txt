@@ -1,0 +1,142 @@
+1-X ülkesinin başkenti neresidir? (X kullanıcı inputu olacaktır)
+
+
+import sqlite3
+import pandas as pd
+
+conn = sqlite3.connect(r'C:\Users\gkm\OneDrive\Desktop\Fenyx Lesson\database\world.sqlite') # database baglantisi saglanir
+country_name= input('Enter a country name :')
+
+# database de sql sorgusu olusuturulur
+query =f"Select country.capital, city.name from country join city on city.id = country.capital where country.name = '{country_name}'" 
+
+# sorguyu database de calistiriyoruz
+result = pd.read_sql_query(query, conn)
+
+print(result) # dataframe ciktisini aliyoruz
+
+if len(result) > 0:
+    capital = result['Name'][0]
+    print(f"Capital city of {country_name} is : {capital}")
+else:
+    print("City not found.")
+conn.close()
+
+=========================================================================================================
+
+2- X şehri hangi ulkede yer almaktadir? (X kullanıcı inputu olacaktır)
+
+import sqlite3
+import pandas as pd
+
+conn = sqlite3.connect(r'C:\Users\gkm\OneDrive\Desktop\Fenyx Lesson\database\world.sqlite') # database baglantisi saglanir
+city_name= input('Enter a country name :')
+
+# database de sql sorgusu olusuturulur
+query =f"Select city.name, country.name from country join city on city.countrycode = country.code where city.name = '{city_name}'" 
+
+# sorguyu database de calistiriyoruz
+result = pd.read_sql_query(query, conn)
+
+print(result) # dataframe ciktisini aliyoruz
+
+if len(result) > 0:
+    country_name = result['Name'][0]
+    print(f"The city {city_name} is in : {country_name}")
+else:
+    print("City not found.")
+conn.close()
+
+
+==========================================================================================================================================
+
+3- X bölgesinde konuşulan tüm dilleri listeleyin. (X kullanıcı inputu olacaktır)
+
+import sqlite3
+import pandas as pd
+
+conn = sqlite3.connect(r'C:\Users\gkm\OneDrive\Desktop\Fenyx Lesson\database\world.sqlite') # database baglantisi saglanir
+region_name= input('Enter a country name :')
+
+# database de sql sorgusu olusuturulur
+query =f"Select countrylanguage.language from country join countrylanguage on countrylanguage.countrycode = country.code where country.region = '{region_name}'" 
+
+# sorguyu database de calistiriyoruz
+result = pd.read_sql_query(query, conn)
+
+print(result) # dataframe ciktisini aliyoruz
+
+conn.close()
+
+====================================================================================================================================
+
+
+4- X dilinin konuşulduğu şehirlerin sayısını bulunuz. (X kullanıcı inputu olacaktır)
+
+
+import sqlite3
+import pandas as pd
+
+conn = sqlite3.connect(r'C:\Users\gkm\OneDrive\Desktop\Fenyx Lesson\database\world.sqlite') # database baglantisi saglanir
+language= input('Enter a country name :')
+
+# database de sql sorgusu olusuturulur
+query =f"Select count(city.name) from city join countrylanguage on countrylanguage.countrycode = city.countrycode where countrylanguage.language = '{language}'" 
+
+# sorguyu database de calistiriyoruz
+result = pd.read_sql_query(query, conn)
+
+print(f'{language} language is spoken in {result} cities') 
+conn.close(
+
+
+5- Kullanıcıdan bir A bölgesi(region) ve bir B dili(language) alın. Eğer bu B dili, A bölgesindeki ülkelerin birinde resmi dil ise, o ülke(ler)in isim(ler)ini listeleyin. Eğer o bölgedeki hiçbir ülkede resmi dil değilse, "B dili A bölgesindeki hiçbir ülkede resmi dil değildir." şeklinde bir çıktı verin. (A ve B kullanıcı inputu olacaktır.)
+
+import sqlite3
+import pandas as pd
+
+conn = sqlite3.connect(r'C:\Users\gkm\OneDrive\Desktop\Fenyx Lesson\database\world.sqlite') # database baglantisi saglanir
+language= input('Enter a language :')
+region = input('Enter the region: ')
+
+# database de sql sorgusu olusuturulur
+query =f"Select country.name from country join countrylanguage on countrylanguage.countrycode = country.code where countrylanguage.language = '{language}' and countrylanguage.isofficial = 'T' and country.region = '{region}'" 
+
+# sorguyu database de calistiriyoruz
+result = pd.read_sql_query(query, conn)
+      
+if len(result) > 0:
+    country_name = result['Name'][0]
+    print(f'{language} language is official language in countries') 
+    print(result)
+    
+else:
+     print(" Language is not official lang.")
+conn.close()
+
+
+
+6- Tüm kıtaları, o kıtalarda konuşulan dillerin sayısı ile birlikte bulunuz. (Bazı dillerin bir kıtada birden fazla ülkede konuşulduğunu unutmayın ve bunu dikkate alarak bir dili birden fazla kez hesaplamayın.)
+
+
+import sqlite3
+import pandas as pd
+
+conn = sqlite3.connect(r'C:\Users\gkm\OneDrive\Desktop\Fenyx Lesson\database\world.sqlite') # database baglantisi saglanir
+
+# database de sql sorgusu olusuturulur
+query =f"""SELECT
+            country.Continent,
+            COUNT(DISTINCT countrylanguage.Language) AS Number_of_Languages
+            from country 
+            join countrylanguage 
+            on countrylanguage.countrycode = country.code 
+            GROUP by country.Continent""" 
+
+# sorguyu database de calistiriyoruz
+result = pd.read_sql_query(query, conn)
+print(result)    #kitalar ve konusulan dil sayisi tablosu
+conn.close()
+
+
+

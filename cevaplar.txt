@@ -1,0 +1,42 @@
+1. 
+SELECT Orders.ProductID, Products.ProductName, OrderDate, FirstName, LastName, Email
+FROM Orders
+INNER JOIN Customers
+ON Orders.CustomerID = Customers.CustomerID
+INNER JOIN Products
+ON Orders.ProductID = Products.ProductID
+
+2. 
+SELECT OrderDate, Products.ProductName, Categories.CategoryName
+FROM Orders
+INNER JOIN Products
+ON Orders.ProductID = Products.ProductID
+INNER JOIN Categories
+ON Products.CategoryID = Categories.CategoryID
+
+3. 
+SELECT FirstName, LastName, Email, OrderDate, Products.ProductName, Products.Price
+FROM Customers
+INNER JOIN Orders
+ON Orders.CustomerID = Customers.CustomerID
+INNER JOIN Products
+ON Products.ProductID = Orders.ProductID
+
+4. 
+SELECT CategoryName, Products.ProductName, Products.Price
+FROM Categories
+INNER JOIN Products
+ON Categories.CategoryID = Products.CategoryID
+
+5. 
+SELECT FirstName,LastName, OrderDate, Products.ProductName, Products.Price
+FROM Customers
+INNER JOIN Orders
+ON Orders.CustomerID = Customers.CustomerID
+INNER JOIN Products
+ON Orders.ProductID = Products.ProductID
+WHERE LastName in (
+SELECT LastName  
+FROM Customers 
+GROUP BY LastName
+HAVING count(LastName)> 1)

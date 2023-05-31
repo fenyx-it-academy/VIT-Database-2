@@ -1,0 +1,41 @@
+1.
+SELECT city.Name, city.Population, country.Name, CountryCode
+FROM city
+INNER JOIN country
+ON city.CountryCode = country.Code
+WHERE city.Population > 1000000
+
+2. 
+SELECT country.Name, country.Population, countrylanguage.Language, countrylanguage.Percentage
+FROM city
+INNER JOIN country
+ON city.CountryCode = country.Code
+INNER JOIN countrylanguage
+ON countrylanguage.CountryCode = country.Code
+WHERE Language in ('English') AND countrylanguage.Percentage>0
+GROUP BY country.Name
+
+3.
+SELECT city.Name, country.Name, country.Continent, GovernmentForm
+FROM city
+INNER JOIN country
+ON city.CountryCode = country.Code
+WHERE country.GovernmentForm in ('Constitutional Monarchy')
+
+4. 
+SELECT city.Name, country.Name, countrylanguage.Language, countrylanguage.IsOfficial, countrylanguage.Percentage
+FROM city
+INNER JOIN country
+ON city.CountryCode = country.Code
+INNER JOIN countrylanguage
+ON country.Code = countrylanguage.CountryCode
+WHERE IsOfficial = 'F' AND Percentage > 10
+
+5.
+SELECT city.Name, country.Name, country.Region, country.HeadOfState, country.Population
+FROM city
+INNER JOIN country
+ON city.CountryCode = country.Code
+WHERE country.Population > 100000000
+
+

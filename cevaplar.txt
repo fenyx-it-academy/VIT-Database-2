@@ -1,0 +1,26 @@
+--CEVAP1-----------------------------------------------------------------------------------
+SELECT Orders.OrderID, Orders.OrderDate, Customers.FirstName, Customers.LastName
+FROM Orders as O
+JOIN Customers as C ON O.CustomerID = C.CustomerID;
+--CEVAP2-----------------------------------------------------------------------------------
+SELECT P.ProductName, C.CategoryName
+FROM Categories as C
+JOIN Products as P ON C.CategoryID =P.CategoryID;
+--CEVAP3-----------------------------------------------------------------------------------
+SELECT C.FirstName, C.LastName, C.Email, O.OrderDate
+FROM Customers as C
+JOIN Orders as O ON C.CustomerID =O.CustomerID;
+--CEVAP4-----------------------------------------------------------------------------------
+SELECT P.ProductName, P.Price, C.CategoryName
+FROM Categories as C
+JOIN Products as P ON P.CategoryID =C.CategoryID;
+--CEVAP5-----------------------------------------------------------------------------------
+SELECT Customers.LastName, Customers.FirstName, Orders.OrderID, Orders.ProductID, Orders.OrderDate
+FROM Customers
+INNER JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+WHERE Customers.LastName IN (
+    SELECT LastName
+    FROM Customers
+    GROUP BY LastName
+    HAVING COUNT(*) > 1
+)

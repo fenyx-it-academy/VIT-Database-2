@@ -1,0 +1,14 @@
+--CEVAP1
+SELECT * FROM Orders AS O JOIN Customers AS C ON O.CustomerID=C.CustomerID
+
+--CEVAP2
+SELECT P.ProductName,C.CategoryName FROM Categories AS C JOIN Products AS P ON C.CategoryID=P.CategoryID
+
+--CEVAP3
+SELECT C.FirstName,C.LastName,C.Email, O.OrderDate,OrderID FROM Customers AS C JOIN Orders AS O ON C.CustomerID=O.CustomerID
+
+--CEVAP4
+SELECT P.ProductName, P.Price,C.CategoryName FROM Categories AS C JOIN Products AS P  ON P.CategoryID=C.CategoryID
+
+--CEVAP5
+SELECT COUNT(*),C.FirstName, C.LastName, O.OrderID, O.OrderDate,O.ProductID FROM ORDERS AS O JOIN CUSTOMERS AS C ON C.CustomerID=O.CustomerID GROUP BY LastName HAVING count(*)>1

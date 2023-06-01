@@ -1,0 +1,49 @@
+    1. "city" ve "country" tablolar?n? dü?ünün. Nüfusu 1 milyondan fazla olan her ?ehrin ad?n?, ilgili ülke ad?n? ve nüfusunu almak için bir SQL sorgusu yaz?n.
+
+
+	SELECT city.Name, city.Population, country.Name ,country.Population
+	FROM city
+	JOIN country on city.CountryCode=country.Code
+	WHERE city.Population>1000000
+	ORDER by city.Population asc
+
+
+
+    2. "city," "country" ve "countrylanguage" tablolar?n? kullanarak her ülkenin toplam nüfusunu ve resmi dil olarak ?ngilizce konu?an nüfusun yüzdesini almak için bir SQL sorgusu yaz?n. Sonuçlar? nüfusa göre azalan ?ekilde s?ralay?n.
+
+
+SELECT country.Name,country.Population,countrylanguage.Percentage as [English percent]
+FROM country
+JOIN countrylanguage on country.Code=countrylanguage.CountryCode
+Where countrylanguage.IsOfficial='T' and Language='English'
+Order BY country.Population desc
+
+
+
+    3. "city" ve "country" tablolar?n? dü?ünün. Her ?ehrin ad?n?, ilgili ülke ad?n?, k?tas?n? ve yönetim ?eklini almak için bir SQL sorgusu yaz?n. Yaln?zca "Anayasal Monar?i" (Constitutional Monarchy) yönetim ?ekline sahip olan ?ehirleri dahil edin.
+
+
+SELECT city.Name,country.Name,country.Continent,country.GovernmentForm
+FROM city
+JOIN country on city.CountryCode=country.Code
+WHERE country.GovernmentForm='Constitutional Monarchy'
+
+
+    4. "city," "country" ve "countrylanguage" tablolar?n? kullanarak her ?ehrin ad?n?, ilgili ülke ad?n? ve resmi dil d???nda konu?an nüfusun yüzdesini almak için bir SQL sorgusu yaz?n. Yaln?zca yüzdesi %10'dan büyük olan ?ehirleri dahil edin.
+   
+
+SELECT city.Name city, country.Name country, sum(countrylanguage.Percentage) as  Toplam_yuzde
+FROM city
+JOIN country ON city.CountryCode = country.Code
+JOIN countrylanguage ON city.CountryCode = countrylanguage.CountryCode
+WHERE countrylanguage.IsOfficial = 'F' AND countrylanguage.Percentage>10
+GROUP by city.Name, country.Name 
+    
+
+	5. "city" ve "country" tablolar?n? dü?ünün. Her ?ehrin ad?n?, ilgili ülke ad?n?, bölgesini ve devlet ba?kan?n? almak için bir SQL sorgusu yaz?n. Yaln?zca nüfusu 100 milyondan fazla olan bölgelerde bulunan ?ehirleri dahil edin.
+
+SELECT city.name,country.Name,country.Region,country.HeadOfState
+From city
+INNER Join country	on city.CountryCode=country.Code
+Where country.Population>100000000
+

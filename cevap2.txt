@@ -1,0 +1,75 @@
+ "city" ve "country" tablolarını düşünün. Nüfusu 1 milyondan fazla olan her şehrin adını, ilgili ülke adını ve nüfusunu almak için bir SQL sorgusu yazın.
+
+
+SELECT 
+country.name , 
+city.name, 
+city.population 
+FROM city
+
+JOIN country
+on country.code = city.CountryCode
+
+WHERE city.Population > 1000000
+
+
+
+
+2- "city," "country" ve "countrylanguage" tablolarını kullanarak her ülkenin toplam nüfusunu ve resmi dil olarak İngilizce konuşan nüfusun yüzdesini almak için bir SQL sorgusu yazın. Sonuçları nüfusa göre azalan şekilde sıralayın.
+
+SELECT 
+country.name,
+country.Population,
+countrylanguage.Language,
+countrylanguage.Percentage
+FROM country
+JOIN countrylanguage
+on countrylanguage.CountryCode = country.Code
+WHERE IsOfficial = 'T' and countrylanguage.Language = 'English'
+
+
+
+3- "city" ve "country" tablolarını düşünün. Her şehrin adını, ilgili ülke adını, kıtasını ve yönetim şeklini almak için bir SQL sorgusu yazın. Yalnızca "Anayasal Monarşi" (Constitutional Monarchy) yönetim şekline sahip olan şehirleri dahil edin.
+
+SELECT 
+city.name,
+country.name,
+country.continent,
+country.governmentform
+FROM city
+JOIN country
+on country.Code = city.countrycode
+WHERE country.governmentform = 'Constitutional Monarchy' 
+
+
+4- "city," "country" ve "countrylanguage" tablolarını kullanarak her şehrin adını, ilgili ülke adını ve resmi dil dışında konuşan nüfusun yüzdesini almak için bir SQL sorgusu yazın. Yalnızca yüzdesi %10'dan büyük olan şehirleri dahil edin.
+
+SELECT 
+city.name,
+country.name,
+countrylanguage.Language,
+countrylanguage.Percentage,
+countrylanguage.IsOfficial
+FROM city
+JOIN country
+on country.Code = city.countrycode
+JOIN countrylanguage
+on	countrylanguage.CountryCode= country.Code
+WHERE IsOfficial='F' and countrylanguage.Percentage > 10
+
+
+
+
+5- "city" ve "country" tablolarını düşünün. Her şehrin adını, ilgili ülke adını, bölgesini ve devlet başkanını almak için bir SQL sorgusu yazın. Yalnızca nüfusu 100 milyondan fazla olan bölgelerde bulunan şehirleri dahil edin.
+
+SELECT 
+city.name,
+country.name,
+country.Region,
+country.HeadOfState,
+city.District,
+country.Population	
+FROM city
+JOIN country
+on country.Code = city.countrycode
+WHERE country.Population > 100000000

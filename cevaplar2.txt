@@ -1,0 +1,20 @@
+--cevap1
+SELECT city.Name, country.Name,city.Population FROM city JOIN country ON CITY.CountryCode=CountryCode WHERE CITY.Population >1000000
+
+--cevap2
+SELECT c.Name AS CountryName, SUM(ci.Population) AS TotalPopulation
+FROM country c
+JOIN city ci ON c.Code = ci.CountryCode
+GROUP BY c.Code
+ORDER BY TotalPopulation DESC;
+
+
+
+--cevap3
+SELECT city.Name, country.Name,country.Continent,country.GovernmentForm FROM city JOIN country ON CITY.CountryCode=CountryCode WHERE country.GovernmentForm = "Constitutional Monarchy"
+
+--cavap4
+
+
+--cevap5
+SELECT city.Name, country.Name,country.Region,country.HeadOfState FROM city JOIN country ON CITY.CountryCode=CountryCode WHERE country.Region IN (SELECT Region FROM country WHERE Population > 100000000);

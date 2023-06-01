@@ -1,0 +1,37 @@
+{\rtf1\ansi\ansicpg1254\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww27400\viewh16080\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 1-\
+SELECT city.Name, country.Name, city.Population\
+FROM city\
+LEFT JOIN country on city.CountryCode = country.Code\
+WHERE city.Population >= 1000000\
+\
+2-\
+SELECT country.Population as TotalPopulation, countrylanguage.Percentage\
+FROM country\
+INNER JOIN countrylanguage on country.Code = countrylanguage.CountryCode\
+WHERE Language = 'English' and IsOfficial = 'T'\
+ORDER By country.Population DESC\
+\
+3-\
+SELECT city.Name, country.Name, country.Continent, country.GovernmentForm\
+FROM city\
+INNER JOIN country on city.CountryCode = country.Code\
+WHERE country.GovernmentForm = 'Constitutional Monarchy'\
+\
+4-\
+SELECT city.Name, country.Name, countrylanguage.Percentage\
+FROM city, countrylanguage\
+INNER JOIN country on city.CountryCode = country.Code\
+WHERE IsOfficial = 'F' and countrylanguage.Percentage > 10\
+\
+5-\
+SELECT city.Name as CityName, country.Name as CountryName, country.Region, country.HeadOfState\
+FROM city\
+INNER JOIN country on city.CountryCode = country.Code\
+WHERE country.Population > 100000000}
